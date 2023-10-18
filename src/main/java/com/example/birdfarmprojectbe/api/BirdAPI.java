@@ -7,6 +7,7 @@ import com.example.birdfarmprojectbe.repository.BirdCageRepository;
 import com.example.birdfarmprojectbe.repository.BirdRepository;
 import com.example.birdfarmprojectbe.repository.CageRepository;
 import com.example.birdfarmprojectbe.service.FileUpload;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,10 @@ public class BirdAPI {
     }
 
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Bird> save(@RequestBody Bird bird, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Bird> save(@RequestPart("bird") String birdJson, @RequestParam("file") MultipartFile file) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Bird bird = objectMapper.readValue(birdJson,Bird.class);
             bird.setImage(fileUpload.uploadFile(file));
             return ResponseEntity.ok(birdRepository.save(bird));
         } catch (IOException e) {

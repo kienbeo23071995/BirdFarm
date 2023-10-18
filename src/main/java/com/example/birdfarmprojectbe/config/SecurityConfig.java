@@ -32,7 +32,8 @@ public class SecurityConfig {
             "/register",
             "/register/**",
             "/home",
-            "/forgot-password"
+            "/forgot-password",
+            "/api/manager/*"
     };
     // Danh sách các URL cho customer
     private static final String[] STAFF_URL = {
@@ -60,18 +61,18 @@ public class SecurityConfig {
                 .cors().and().csrf()
                 .disable()
                 // Cho phép truy cập các URL không yêu cầu xác thực
-                .authorizeHttpRequests().requestMatchers(UNSECURED_URLs).permitAll().and()
-                // Cấu hình quyền truy cập dựa trên vai trò (authorities)
-                .authorizeHttpRequests().requestMatchers(ADMIN_URL).hasAuthority("ADMIN").and()
-                .authorizeHttpRequests().requestMatchers(MANAGER_URL).hasAuthority("MANAGER").and()
-                .authorizeHttpRequests().requestMatchers(STAFF_URL).hasAuthority("STAFF").and()
-                .authorizeHttpRequests().requestMatchers(THREEROLE_URL).hasAnyAuthority("MANAGER", "STAFF","ADMIN")
-                .anyRequest().authenticated().and()
-                // Quản lý phiên làm việc (session)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                // Cấu hình AuthenticationProvider
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .authorizeHttpRequests().requestMatchers(UNSECURED_URLs).permitAll().and()
+//                // Cấu hình quyền truy cập dựa trên vai trò (authorities)
+//                .authorizeHttpRequests().requestMatchers(ADMIN_URL).hasAuthority("ADMIN").and()
+//                .authorizeHttpRequests().requestMatchers(MANAGER_URL).hasAuthority("MANAGER").and()
+//                .authorizeHttpRequests().requestMatchers(STAFF_URL).hasAuthority("STAFF").and()
+//                .authorizeHttpRequests().requestMatchers(THREEROLE_URL).hasAnyAuthority("MANAGER", "STAFF","ADMIN")
+//                .anyRequest().authenticated().and()
+//                // Quản lý phiên làm việc (session)
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                // Cấu hình AuthenticationProvider
+//                .authenticationProvider(authenticationProvider())
+//                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
