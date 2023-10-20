@@ -1,18 +1,11 @@
 package com.example.birdfarmprojectbe.api;
 
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
-import com.example.birdfarmprojectbe.models.Bird;
 import com.example.birdfarmprojectbe.models.FoodType;
-import com.example.birdfarmprojectbe.repository.BirdCageRepository;
-import com.example.birdfarmprojectbe.repository.BirdRepository;
-import com.example.birdfarmprojectbe.repository.CageRepository;
 import com.example.birdfarmprojectbe.repository.FoodTypeRepository;
-import com.example.birdfarmprojectbe.service.FileUpload;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

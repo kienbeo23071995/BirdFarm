@@ -1,5 +1,8 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -7,11 +10,15 @@ import org.hibernate.annotations.Nationalized;
 import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "Bird_Status")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class BirdStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +35,11 @@ public class BirdStatus {
     @JoinColumn(name = "statusID", nullable = false)
     private Status statusID;
 
-    @Size(max = 10)
     @NotNull
-    @Nationalized
-    @Column(name = "createdDate", nullable = false, length = 10)
-    private String createdDate;
+    @Column(name = "startDate", nullable = false)
+    private Instant startDate;
+
+    @Column(name = "endDate")
+    private Instant endDate;
 
 }

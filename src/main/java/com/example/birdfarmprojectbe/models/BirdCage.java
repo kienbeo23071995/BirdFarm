@@ -1,5 +1,8 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +14,9 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "Bird_Cage")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class BirdCage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

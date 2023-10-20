@@ -1,5 +1,7 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -18,6 +20,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Bird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,10 +51,6 @@ public class Bird {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "birdTypeID", nullable = false)
     private BirdType birdTypeID;
-
-    @NotNull
-    @Column(name = "cageID", nullable = false)
-    private Integer cageID;
 
     @OneToMany(mappedBy = "birdID")
     private Set<BirdCage> birdCages = new LinkedHashSet<>();

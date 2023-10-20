@@ -33,7 +33,8 @@ public class SecurityConfig {
             "/register/**",
             "/home",
             "/forgot-password",
-            "/api/manager/*"
+            "/api/manager/*",
+            "/api/location/*",
     };
     // Danh sách các URL cho customer
     private static final String[] STAFF_URL = {

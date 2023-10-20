@@ -1,10 +1,10 @@
 package com.example.birdfarmprojectbe.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,10 +12,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class FoodType {
+@Table(name = "Location")
+public class Location {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
@@ -24,11 +25,6 @@ public class FoodType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
-
-    @OneToMany(mappedBy = "foodTypeID")
-    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
-
+    @OneToMany(mappedBy = "location")
+    private Set<Cage> cageSet = new LinkedHashSet<>();
 }

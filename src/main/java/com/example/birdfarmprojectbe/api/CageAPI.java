@@ -31,7 +31,7 @@ public class CageAPI {
         return ResponseEntity.ok(cageRepository.findAll());
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cage> save(@RequestBody Cage cage) {
         cageRepository.save(cage);
         return ResponseEntity.ok(cage);
@@ -54,10 +54,20 @@ public class CageAPI {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteDRDisplayReportConfig(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         cageRepository.deleteById(id);
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping("/getCageBySpecies/{id}")
+    public ResponseEntity<List<Cage>> getCagesBySpecies(@PathVariable final Integer id){
+        return ResponseEntity.ok(cageRepository.getCageBySpeciesID(id));
+    }
+
+    @GetMapping("/getCageByLocation/{id}")
+    public ResponseEntity<List<Cage>> getCagesByLocation(@PathVariable final Integer id){
+        return ResponseEntity.ok(cageRepository.getCageByLocationID(id));
     }
 }
