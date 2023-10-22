@@ -3,7 +3,6 @@ package com.example.birdfarmprojectbe.api;
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
 import com.example.birdfarmprojectbe.dto.MedicineCustomDTO;
 import com.example.birdfarmprojectbe.models.BirdMedicine;
-import com.example.birdfarmprojectbe.models.TaskBird;
 import com.example.birdfarmprojectbe.repository.BirdMedicineRepository;
 import com.example.birdfarmprojectbe.repository.BirdRepository;
 import com.example.birdfarmprojectbe.service.MedicineBirdService;
@@ -19,7 +18,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/manager/scheduleMedicine")
 @AllArgsConstructor
-public class ScheduleMedicine {
+public class ScheduleMedicineAPI {
     private final String ENTITY_NAME = "ScheduleMedicineAPI";
 
     private final BirdMedicineRepository birdMedicineRepository;

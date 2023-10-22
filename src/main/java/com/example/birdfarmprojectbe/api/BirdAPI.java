@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public class BirdAPI {
             BirdStatus birdStatus = new BirdStatus();
             birdStatus.setBirdID(bird);
             birdStatus.setStatusID(status);
-            birdStatus.setStartDate(Instant.now());
+            birdStatus.setStartDate(LocalDate.now());
             birdStatusRepository.save(birdStatus);
             BirdCage birdCage = new BirdCage();
             Cage cage = cageRepository.findById(birdCageDTO.getCageID()).get();
@@ -66,7 +67,7 @@ public class BirdAPI {
             cageRepository.save(cage);
             birdCage.setCageID(cage);
             birdCage.setBirdID(bird);
-            birdCage.setStartDate(Instant.now());
+            birdCage.setStartDate(LocalDate.now());
             birdCageRepository.save(birdCage);
             return ResponseEntity.ok(bird);
         } catch (IOException e) {
@@ -94,9 +95,9 @@ public class BirdAPI {
                 BirdStatus birdStatus = new BirdStatus();
                 birdStatus.setBirdID(bird);
                 birdStatus.setStatusID(status);
-                birdStatus.setStartDate(Instant.now());
+                birdStatus.setStartDate(LocalDate.now());
                 BirdStatus oldBirdStatus = birdStatusRepository.getCurrentBirdStatusByBirdIDAndStatusID(bird.getId(), birdCageDTO.getStatusID());
-                oldBirdStatus.setEndDate(Instant.now());
+                oldBirdStatus.setEndDate(LocalDate.now());
                 birdStatusRepository.save(oldBirdStatus);
                 birdStatusRepository.save(birdStatus);
             }
@@ -110,10 +111,10 @@ public class BirdAPI {
                 cageRepository.save(cage);
                 birdCage.setCageID(cage);
                 birdCage.setBirdID(bird);
-                birdCage.setStartDate(Instant.now());
+                birdCage.setStartDate(LocalDate.now());
                 birdCageRepository.save(birdCage);
                 BirdCage oldBirdCage = birdCageRepository.getBirdCageByBirdIDAndCageID(cage.getId(), bird.getId());
-                oldBirdCage.setEndDate(Instant.now());
+                oldBirdCage.setEndDate(LocalDate.now());
                 birdCageRepository.save(oldBirdCage);
             }
             return ResponseEntity
