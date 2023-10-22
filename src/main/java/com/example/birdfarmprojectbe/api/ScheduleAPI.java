@@ -3,23 +3,14 @@ package com.example.birdfarmprojectbe.api;
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
 import com.example.birdfarmprojectbe.dto.BirdDTO;
 import com.example.birdfarmprojectbe.dto.TaskDTO;
-import com.example.birdfarmprojectbe.models.Bird;
-import com.example.birdfarmprojectbe.models.BirdCage;
 import com.example.birdfarmprojectbe.models.Task;
 import com.example.birdfarmprojectbe.models.TaskBird;
 import com.example.birdfarmprojectbe.repository.*;
-import com.example.birdfarmprojectbe.service.FileUpload;
 import com.example.birdfarmprojectbe.ulti.Helper;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.time.Instant;
 import java.util.*;
 
 @CrossOrigin(value = "*", allowedHeaders = "*")
@@ -50,7 +41,7 @@ public class ScheduleAPI {
         for(BirdDTO i : taskDTO.getBirdDTOList()){
             for(String item : i.getSchedules()){
                 TaskBird taskBird = new TaskBird();
-                taskBird.setDate(Helper.convertStringToInstant(item));
+                taskBird.setDate(Helper.convertStringToLocalDateTime(item));
                 taskBird.setBirdID(birdRepository.findById(i.getBirdID()).get());
                 taskBird.setQuantity(i.getQuantity());
                 taskBird.setFoodTypeID(foodTypeRepository.findById(i.getFoodTypeID()).get());
@@ -77,5 +68,11 @@ public class ScheduleAPI {
                 .body(result);
     }
 
+    @PutMapping(value = "/deleteTaskBird/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final Integer id)
+    {
+        taskBirdRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

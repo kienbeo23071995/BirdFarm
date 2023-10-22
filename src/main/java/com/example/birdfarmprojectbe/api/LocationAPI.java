@@ -47,4 +47,11 @@ public class LocationAPI {
                 .ok()
                 .body(result);
     }
+
+    @PutMapping(value = "/deleteTaskBird/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final Integer id)
+    {
+        locationRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

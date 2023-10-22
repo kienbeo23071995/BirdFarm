@@ -61,4 +61,6 @@ public class Bird {
     @OneToMany(mappedBy = "birdID")
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "birdID")
+    private Set<BirdMedicine> birdMedicines = new LinkedHashSet<>();
 }

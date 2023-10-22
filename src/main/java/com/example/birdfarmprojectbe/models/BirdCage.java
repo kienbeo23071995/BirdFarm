@@ -9,14 +9,12 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "Bird_Cage")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class BirdCage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +33,9 @@ public class BirdCage {
 
     @NotNull
     @Column(name = "startDate", nullable = false)
-    private Instant startDate;
+    private LocalDate startDate;
 
     @Column(name = "endDate")
-    private Instant endDate;
+    private LocalDate endDate;
 
 }

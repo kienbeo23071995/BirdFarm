@@ -9,6 +9,7 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -44,6 +45,6 @@ public class TaskBird {
 
     @NotNull
     @Column(name = "\"date\"", nullable = false)
-    private Instant date;
+    private LocalDateTime date;
 
 }

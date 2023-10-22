@@ -1,13 +1,10 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -15,7 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class BirdType {
+@Table(name = "Medicine")
+public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -27,11 +25,10 @@ public class BirdType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specieID")
-    private Species specieID;
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @OneToMany(mappedBy = "birdTypeID")
-    private Set<Bird> birds = new LinkedHashSet<>();
-
+    @OneToMany(mappedBy = "medicineID")
+    private Set<BirdMedicine> birdMedicines = new LinkedHashSet<>();
 }

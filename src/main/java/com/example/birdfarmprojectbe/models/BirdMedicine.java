@@ -1,21 +1,22 @@
 package com.example.birdfarmprojectbe.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Bird_Status")
-public class BirdStatus {
+@Table(name = "Bird_Medicine")
+public class BirdMedicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,14 +29,14 @@ public class BirdStatus {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "statusID", nullable = false)
-    private Status statusID;
+    @JoinColumn(name = "medicineID", nullable = false)
+    private Medicine medicineID;
 
     @NotNull
-    @Column(name = "startDate", nullable = false)
-    private LocalDate startDate;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @Column(name = "endDate")
-    private LocalDate endDate;
-
+    @NotNull
+    @Column(name = "\"date\"", nullable = false)
+    private LocalDateTime date;
 }
