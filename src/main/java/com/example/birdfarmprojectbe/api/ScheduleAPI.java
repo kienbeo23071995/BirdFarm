@@ -34,9 +34,9 @@ public class ScheduleAPI {
     @PostMapping(value = "/create")
     public ResponseEntity<List<TaskBird>> save(@RequestBody TaskDTO taskDTO) throws ParseException {
         Task task = new Task();
-        task.setTitle(task.getTitle());
-        task.setColor(task.getColor());
-        task.setDescription(task.getDescription());
+        task.setTitle(taskDTO.getTitle());
+        task.setColor(taskDTO.getColor());
+        task.setDescription(taskDTO.getDescription());
         taskRepository.save(task);
         for(BirdDTO i : taskDTO.getBirdDTOList()){
             for(String item : i.getSchedules()){
