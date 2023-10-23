@@ -20,6 +20,8 @@ public class BirdCageDTO {
 
     private Integer statusID;
 
+    private Boolean gender;
+
     public BirdCageDTO() {
 
     }
@@ -30,6 +32,15 @@ public class BirdCageDTO {
         this.birdTypeID = birdTypeID;
         this.cageID = cageID;
         this.statusID = statusID;
+    }
+
+    public BirdCageDTO(String name, LocalDate age, Integer birdTypeID, Integer cageID, Integer statusID, Boolean gender) {
+        this.name = name;
+        this.age = age;
+        this.birdTypeID = birdTypeID;
+        this.cageID = cageID;
+        this.statusID = statusID;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -70,5 +81,13 @@ public class BirdCageDTO {
 
     public void setStatusID(Integer statusID) {
         this.statusID = statusID;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 }

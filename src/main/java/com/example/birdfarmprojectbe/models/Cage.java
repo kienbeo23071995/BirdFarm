@@ -1,6 +1,7 @@
 package com.example.birdfarmprojectbe.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,13 +42,12 @@ public class Cage {
     private Integer quantity;
 
     @OneToMany(mappedBy = "cageID")
-    @JsonBackReference
+    @JsonIgnore
     private List<BirdCage> birdCages = new ArrayList<>();
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "locationID", nullable = false)
-    @JsonManagedReference
     private Location location;
 
 }

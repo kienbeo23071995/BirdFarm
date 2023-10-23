@@ -1,8 +1,8 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -22,9 +22,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Bird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,22 +49,21 @@ public class Bird {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "birdTypeID", nullable = false)
-    @JsonManagedReference
     private BirdType birdTypeID;
 
     @OneToMany(mappedBy = "birdID")
-    @JsonBackReference
+    @JsonIgnore
     private Set<BirdCage> birdCages = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "birdID")
-    @JsonBackReference
+    @JsonIgnore
     private Set<BirdStatus> birdStatuses = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "birdID")
-    @JsonBackReference
+    @JsonIgnore
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "birdID")
-    @JsonBackReference
+    @JsonIgnore
     private Set<BirdMedicine> birdMedicines = new LinkedHashSet<>();
 }

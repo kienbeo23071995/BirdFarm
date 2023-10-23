@@ -28,6 +28,7 @@ public class ScheduleAPI {
 
     @GetMapping("/getall")
     public ResponseEntity<List<TaskBird>> getAll(){
+
         return ResponseEntity.ok(taskBirdRepository.findAll());
     }
 

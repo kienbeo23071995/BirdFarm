@@ -1,7 +1,6 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -27,7 +26,7 @@ public class Status {
     private String name;
 
     @OneToMany(mappedBy = "statusID")
-    @JsonBackReference
+    @JsonIgnore
     private Set<BirdStatus> birdStatuses = new LinkedHashSet<>();
 
 }
