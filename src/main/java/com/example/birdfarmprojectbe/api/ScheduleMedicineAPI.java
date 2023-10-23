@@ -29,6 +29,7 @@ public class ScheduleMedicineAPI {
 
     @GetMapping("/getall")
     public ResponseEntity<List<BirdMedicine>> getAll(){
+
         return ResponseEntity.ok(birdMedicineRepository.findAll());
     }
 

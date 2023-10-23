@@ -1,5 +1,7 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,5 +28,6 @@ public class Location {
     private String name;
 
     @OneToMany(mappedBy = "location")
+    @JsonBackReference
     private Set<Cage> cageSet = new LinkedHashSet<>();
 }

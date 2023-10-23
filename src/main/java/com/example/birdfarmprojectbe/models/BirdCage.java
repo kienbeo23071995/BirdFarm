@@ -2,6 +2,7 @@ package com.example.birdfarmprojectbe.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,11 +25,13 @@ public class BirdCage {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "birdID", nullable = false)
+    @JsonManagedReference
     private Bird birdID;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cageID", nullable = false)
+    @JsonManagedReference
     private Cage cageID;
 
     @NotNull

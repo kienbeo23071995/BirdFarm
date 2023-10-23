@@ -41,11 +41,13 @@ public class Cage {
     private Integer quantity;
 
     @OneToMany(mappedBy = "cageID")
+    @JsonBackReference
     private List<BirdCage> birdCages = new ArrayList<>();
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "locationID", nullable = false)
+    @JsonManagedReference
     private Location location;
 
 }

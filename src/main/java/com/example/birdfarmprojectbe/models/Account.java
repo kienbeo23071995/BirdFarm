@@ -1,5 +1,7 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -33,9 +35,11 @@ public class Account {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
+    @JsonManagedReference
     private Role role;
 
     @OneToMany(mappedBy = "account")
+    @JsonBackReference
     private Set<Task> tasks = new LinkedHashSet<>();
 
 }
