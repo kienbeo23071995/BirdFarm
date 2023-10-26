@@ -29,7 +29,8 @@ public class TaskBirdServiceImpl implements TaskBirdService {
                     .collect(Collectors.toList());
         }
         for(TaskBird i : list){
-            birdCageRepository.getBirdCageByBirdIDAndCageID()
+            Integer id = birdCageRepository.getBirdCageByBirdIDAndCageID(i.getBirdID().getId()).getCageID().getLocation().getId();
+            i.setLocationID(id);
         }
         return list;
     }

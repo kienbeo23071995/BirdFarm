@@ -13,6 +13,9 @@ public interface BirdCageRepository extends JpaRepository<BirdCage, Integer> {
     @Query(value = "Select bc from BirdCage bc where bc.cageID.id = :cageID")
     Set<BirdCage> getBirdCageByCageID(Integer cageID);
 
+    @Query(value = "Select * from bird_cage where birdid = ?1 and cageid = ?2 and end_date is null",nativeQuery = true)
+    BirdCage getBirdCageByBirdIDAndCageID(Integer cageID,Integer birdID);
+
     @Query(value = "Select * from bird_cage where birdid = ?1 and end_date is null",nativeQuery = true)
     BirdCage getBirdCageByBirdIDAndCageID(Integer birdID);
 }

@@ -59,7 +59,7 @@ public class ScheduleAPI {
                 taskBirdRepository.save(taskBird);
             }
         }
-        return ResponseEntity.ok(taskBirdRepository.findAll());
+        return ResponseEntity.ok(taskBirdService.get(null,null));
     }
 
     @PutMapping(value = "/updateInfoTaskBird/{id}")
