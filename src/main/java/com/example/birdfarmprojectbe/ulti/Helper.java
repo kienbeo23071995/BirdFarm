@@ -1,5 +1,7 @@
 package com.example.birdfarmprojectbe.ulti;
 
+import jakarta.persistence.Query;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -9,13 +11,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 public class Helper {
-    public static LocalDateTime convertStringToLocalDateTime(String requestTime) throws ParseException {
+    public static LocalDateTime convertStringToLocalDateTime(String requestTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(requestTime, formatter);
         return dateTime;
@@ -66,6 +65,15 @@ public class Helper {
                 ps.setString(index, (value.toString()));
             } else {
                 ps.setString(index, value.toString());
+            }
+        }
+    }
+
+    public static void setParams(Query query, Map<String, Object> params) {
+        if (params != null && !params.isEmpty()) {
+            Set<Map.Entry<String, Object>> set = params.entrySet();
+            for (Map.Entry<String, Object> obj : set) {
+                if (obj.getValue() == null) query.setParameter(obj.getKey(), ""); else query.setParameter(obj.getKey(), obj.getValue());
             }
         }
     }

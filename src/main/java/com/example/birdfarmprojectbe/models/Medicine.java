@@ -30,7 +30,7 @@ public class Medicine {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @OneToMany(mappedBy = "medicineID")
+    @OneToMany(mappedBy = "medicine")
     @JsonIgnore
-    private Set<BirdMedicine> birdMedicines = new LinkedHashSet<>();
+    private Set<FoodNorm> foodNorms = new LinkedHashSet<>();
 }

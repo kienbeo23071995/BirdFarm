@@ -35,6 +35,9 @@ public class Account {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "staff")
+    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
+
     @OneToMany(mappedBy = "account")
     private Set<Task> tasks = new LinkedHashSet<>();
 

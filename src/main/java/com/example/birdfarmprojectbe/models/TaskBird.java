@@ -44,7 +44,26 @@ public class TaskBird {
     private Integer quantity;
 
     @NotNull
-    @Column(name = "\"date\"", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "\"startDate\"", nullable = false)
+    private LocalDateTime startDate;
 
+    @NotNull
+    @Column(name = "\"endDate\"", nullable = false)
+    private LocalDateTime endDate;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "staffID", nullable = false)
+    private Account staff;
+
+    @NotNull
+    @Column(name = "status", nullable = false)
+    private Integer status;
+
+    @NotNull
+    @Column(name = "note")
+    private String note;
+
+    @Transient
+    private Integer LocationID;
 }

@@ -5,13 +5,13 @@ import java.util.List;
 public class BirdDTO {
     private Integer birdID;
     private Integer foodTypeID;
-    private List<String> schedules;
+    private List<ScheduleDTO> schedules;
     private Integer quantity;
 
     public BirdDTO() {
     }
 
-    public BirdDTO(Integer birdID, Integer foodTypeID, List<String> schedules, Integer quantity) {
+    public BirdDTO(Integer birdID, Integer foodTypeID, List<ScheduleDTO> schedules, Integer quantity) {
         this.birdID = birdID;
         this.foodTypeID = foodTypeID;
         this.schedules = schedules;
@@ -34,11 +34,11 @@ public class BirdDTO {
         this.foodTypeID = foodTypeID;
     }
 
-    public List<String> getSchedules() {
+    public List<ScheduleDTO> getSchedules() {
         return schedules;
     }
 
-    public void setSchedules(List<String> schedules) {
+    public void setSchedules(List<ScheduleDTO> schedules) {
         this.schedules = schedules;
     }
 

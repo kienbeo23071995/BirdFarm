@@ -1,9 +1,6 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -63,7 +60,47 @@ public class Bird {
     @JsonIgnore
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "birdID")
-    @JsonIgnore
-    private Set<BirdMedicine> birdMedicines = new LinkedHashSet<>();
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "gender", nullable = false)
+    private Boolean gender;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "attituteds", nullable = false)
+    private String attituteds;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "qualities", nullable = false)
+    private String qualities;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "appearance", nullable = false)
+    private String appearance;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "exotic", nullable = false)
+    private Boolean exotic;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "exoticrate")
+    private String exoticrate;
+
+
 }

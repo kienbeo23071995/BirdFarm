@@ -50,4 +50,9 @@ public class Cage {
     @JoinColumn(name = "locationID", nullable = false)
     private Location location;
 
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "image", nullable = false)
+    private String image;
 }

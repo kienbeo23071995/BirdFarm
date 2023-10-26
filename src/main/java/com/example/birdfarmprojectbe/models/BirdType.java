@@ -36,4 +36,7 @@ public class BirdType {
     @JsonIgnore
     private Set<Bird> birds = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "birdType")
+    @JsonIgnore
+    private Set<FoodNorm> foodNorms = new LinkedHashSet<>();
 }

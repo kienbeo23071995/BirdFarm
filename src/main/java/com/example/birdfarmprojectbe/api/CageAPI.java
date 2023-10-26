@@ -1,11 +1,15 @@
 package com.example.birdfarmprojectbe.api;
 
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
+import com.example.birdfarmprojectbe.dto.CageDTO;
 import com.example.birdfarmprojectbe.models.Bird;
 import com.example.birdfarmprojectbe.models.Cage;
 import com.example.birdfarmprojectbe.repository.BirdRepository;
 import com.example.birdfarmprojectbe.repository.CageRepository;
+import com.example.birdfarmprojectbe.repository.LocationRepository;
 import com.example.birdfarmprojectbe.service.FileUpload;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,10 @@ import java.util.Objects;
 public class CageAPI {
     private final CageRepository cageRepository;
 
+    private final LocationRepository locationRepository;
+
+    private final FileUpload fileUpload;
+
     private final String ENTITY_NAME = "CageAPI";
 
     @GetMapping("/")
@@ -31,26 +39,46 @@ public class CageAPI {
         return ResponseEntity.ok(cageRepository.findAll());
     }
 
-    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cage> save(@RequestBody Cage cage) {
-        cageRepository.save(cage);
-        return ResponseEntity.ok(cage);
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Cage> save(@RequestPart("cage") String cageJson, @RequestParam("file") MultipartFile file) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CageDTO cageDTO = objectMapper.readValue(cageJson, CageDTO.class);
+            Cage cage = new Cage();
+            cage.setMax(cageDTO.getMax());
+            cage.setLocation(locationRepository.findById(cageDTO.getLocationID()).get());
+            cage.setType(cageDTO.getType());
+            cage.setQuantity(cageDTO.getQuantity());
+            cage.setImage(fileUpload.uploadFile(file));
+            cageRepository.save(cage);
+            return ResponseEntity.ok(cage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Cage> update(@PathVariable final Integer id,@RequestBody Cage cage)
+    @PutMapping(value ="/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Cage> update(@PathVariable final Integer id,@RequestPart("cage") String cageJson, @RequestParam("file") MultipartFile file)
             throws URISyntaxException {
-        if (!Objects.equals(id, cage.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
         if (!cageRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-        Cage result = cageRepository.save(cage);
-        return ResponseEntity
-                .ok()
-                .body(result);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CageDTO cageDTO = objectMapper.readValue(cageJson, CageDTO.class);
+            Cage cage = cageRepository.findById(id).get();
+            cage.setMax(cageDTO.getMax());
+            cage.setLocation(locationRepository.findById(cageDTO.getLocationID()).get());
+            cage.setType(cageDTO.getType());
+            cage.setQuantity(cageDTO.getQuantity());
+            cage.setImage(fileUpload.uploadFile(file));
+            cageRepository.save(cage);
+            return ResponseEntity
+                    .ok()
+                    .body(cage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping("/delete/{id}")

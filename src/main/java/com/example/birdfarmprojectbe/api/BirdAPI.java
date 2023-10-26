@@ -5,7 +5,6 @@ import com.example.birdfarmprojectbe.dto.BirdCageDTO;
 import com.example.birdfarmprojectbe.models.*;
 import com.example.birdfarmprojectbe.repository.*;
 import com.example.birdfarmprojectbe.service.FileUpload;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,12 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
 
 @CrossOrigin(value = "*", allowedHeaders = "*")
 @RestController
@@ -54,6 +50,13 @@ public class BirdAPI {
             bird.setAge(birdCageDTO.getAge());
             bird.setBirdTypeID(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
             bird.setImage(fileUpload.uploadFile(file));
+            bird.setGender(birdCageDTO.getGender());
+            bird.setAttituteds(birdCageDTO.getAttituteds());
+            bird.setAppearance(birdCageDTO.getAppearance());
+            bird.setColor(birdCageDTO.getColor());
+            bird.setExotic(birdCageDTO.getExotic());
+            bird.setExoticrate(birdCageDTO.getExoticrate());
+            bird.setQualities(birdCageDTO.getQualities());
             birdRepository.save(bird);
             Status status = statusRepository.findById(birdCageDTO.getStatusID()).get();
             BirdStatus birdStatus = new BirdStatus();
@@ -89,6 +92,13 @@ public class BirdAPI {
             bird.setAge(birdCageDTO.getAge());
             bird.setBirdTypeID(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
             bird.setImage(fileUpload.uploadFile(file));
+            bird.setGender(birdCageDTO.getGender());
+            bird.setAttituteds(birdCageDTO.getAttituteds());
+            bird.setAppearance(birdCageDTO.getAppearance());
+            bird.setColor(birdCageDTO.getColor());
+            bird.setExotic(birdCageDTO.getExotic());
+            bird.setExoticrate(birdCageDTO.getExoticrate());
+            bird.setQualities(birdCageDTO.getQualities());
             birdRepository.save(bird);
             if(birdCageDTO.getStatusID() != null){
                 Status status = statusRepository.findById(birdCageDTO.getStatusID()).get();
