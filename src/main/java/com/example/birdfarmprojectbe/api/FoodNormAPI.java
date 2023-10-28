@@ -49,4 +49,12 @@ public class FoodNormAPI {
                 .body(result);
     }
 
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<FoodNorm> delete(@PathVariable final Integer id){
+        foodNormRepository.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
 }

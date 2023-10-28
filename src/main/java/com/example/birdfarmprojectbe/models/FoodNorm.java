@@ -1,10 +1,17 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalTime;
 
 @Getter
@@ -30,12 +37,11 @@ public class FoodNorm {
     @Column(name = "quantityFood", nullable = false)
     private Integer quantityFood;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medicineID")
     private Medicine medicine;
 
-    @NotNull
+    @Null
     @Column(name = "quantityMedicine")
     private Integer quantityMedicine;
 
@@ -45,6 +51,8 @@ public class FoodNorm {
 
     @NotNull
     @Column(name = "startTime",nullable = false)
+    @JsonSerialize(using = LocalTimeSerializer.class)
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime startTime;
 
     @NotNull

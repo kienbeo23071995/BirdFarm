@@ -1,5 +1,6 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -36,9 +37,11 @@ public class Account {
     private Role role;
 
     @OneToMany(mappedBy = "staff")
+    @JsonIgnore
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     private Set<Task> tasks = new LinkedHashSet<>();
 
 }

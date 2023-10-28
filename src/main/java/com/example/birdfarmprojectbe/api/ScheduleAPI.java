@@ -50,7 +50,9 @@ public class ScheduleAPI {
                 taskBird.setStartDate(Helper.convertStringToLocalDateTime(item.getStartDate()));
                 taskBird.setEndDate(Helper.convertStringToLocalDateTime(item.getEndDate()));
                 taskBird.setStatus(item.getStatus());
-                taskBird.setStaff(accountRepository.findById(item.getStaffID()).get());
+                if(item.getStaffID() != null){
+                    taskBird.setStaff(accountRepository.findById(item.getStaffID()).get());
+                }
                 taskBird.setNote(item.getNote());
                 taskBird.setBirdID(birdRepository.findById(i.getBirdID()).get());
                 taskBird.setQuantity(i.getQuantity());
