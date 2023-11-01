@@ -47,7 +47,7 @@ public class ScheduleAPI {
         task.setColor(taskDTO.getColor());
         task.setDescription(taskDTO.getDescription());
         taskRepository.save(task);
-        for(CageTaskDTO i : taskDTO.getBirdDTOList()){
+        for(CageTaskDTO i : taskDTO.getCageTaskDTOList()){
             for(ScheduleDTO item : i.getSchedules()){
                 TaskBird taskBird = new TaskBird();
                 taskBird.setStartDate(Helper.convertStringToLocalDateTime(item.getStartDate()));
@@ -56,10 +56,13 @@ public class ScheduleAPI {
                 if(item.getStaffID() != null){
                     taskBird.setStaffid(accountRepository.findById(item.getStaffID()).get());
                 }
+                taskBird.setStaffid(accountRepository.findById(item.getStaffID()).get());
                 taskBird.setNote(item.getNote());
                 taskBird.setCageid(cageRepository.findById(i.getCageID()).get());
                 taskBird.setTask(task);
-                taskBird.setFoodNormID(foodNormRepository.findById(i.getFoodNormID()).get());
+                if(i.getFoodNormID() != null){
+                    taskBird.setFoodNormID(foodNormRepository.findById(i.getFoodNormID()).get());
+                }
                 taskBirdRepository.save(taskBird);
                 if(item.getFoodList() != null){
                     for(FoodNormFoodDTO temp : item.getFoodList()){

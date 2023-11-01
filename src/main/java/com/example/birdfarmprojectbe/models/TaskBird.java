@@ -69,7 +69,6 @@ public class TaskBird {
     private Set<TaskBirdFood> taskBirdFoods = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "taskBird")
-    @JsonIgnore
     private Set<TaskBirdMedicine> taskBirdMedicines = new LinkedHashSet<>();
 
 }

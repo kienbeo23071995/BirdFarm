@@ -46,14 +46,12 @@ public class FoodNorm {
     private Integer water;
 
     @OneToMany(mappedBy = "foodNormID")
-    @JsonIgnore
     private Set<FoodnormFood> foodnormFoods = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "foodNormID")
-    @JsonIgnore
+
     private Set<FoodnormMedicine> foodnormMedicines = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "foodNormID")
-    @JsonIgnore
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 }

@@ -56,11 +56,11 @@ public class TaskDTO {
         this.description = description;
     }
 
-    public List<CageTaskDTO> getBirdDTOList() {
+    public List<CageTaskDTO> getCageTaskDTOList() {
         return cageTaskDTOList;
     }
 
-    public void setBirdDTOList(List<CageTaskDTO> birdDTOList) {
-        this.cageTaskDTOList = birdDTOList;
+    public void setCageTaskDTOList(List<CageTaskDTO> cageTaskDTOList) {
+        this.cageTaskDTOList = cageTaskDTOList;
     }
 }

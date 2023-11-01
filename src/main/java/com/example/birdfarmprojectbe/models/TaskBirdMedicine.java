@@ -1,5 +1,6 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 public class TaskBirdMedicine {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
@@ -22,6 +24,7 @@ public class TaskBirdMedicine {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "task_bird_ID", nullable = false)
+    @JsonIgnore
     private TaskBird taskBird;
 
     @NotNull

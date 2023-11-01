@@ -26,6 +26,17 @@ public class FoodNormDTO {
     public FoodNormDTO() {
     }
 
+    public FoodNormDTO(Integer id, BirdType birdType, Integer duration, Integer numberOfFeeding, LocalTime startTime, String note, List<FoodNormMedicineDTO> foodNormMedicineDTOS, List<FoodNormFoodDTO> foodNormFoodDTOS) {
+        this.id = id;
+        this.birdType = birdType;
+        this.duration = duration;
+        this.numberOfFeeding = numberOfFeeding;
+        this.startTime = startTime;
+        this.note = note;
+        this.foodNormMedicineDTOS = foodNormMedicineDTOS;
+        this.foodNormFoodDTOS = foodNormFoodDTOS;
+    }
+
     public FoodNormDTO(Integer id, BirdType birdType, Integer duration, Integer numberOfFeeding, LocalTime startTime, String note, Integer water, List<FoodNormMedicineDTO> foodNormMedicineDTOS, List<FoodNormFoodDTO> foodNormFoodDTOS) {
         this.id = id;
         this.birdType = birdType;

@@ -20,6 +20,11 @@ public class AccountAPI {
         return ResponseEntity.ok(accountRepository.getAccountByRole(roleID));
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Account>> getAccounts(){
+        return ResponseEntity.ok(accountRepository.findAll());
+    }
+
     @GetMapping("/getAccountDetail/{id}")
     public ResponseEntity<Account> getAccountDetailByID(@PathVariable Integer id){
         return ResponseEntity.ok(accountRepository.findById(id).get());

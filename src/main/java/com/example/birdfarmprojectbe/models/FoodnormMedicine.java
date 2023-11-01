@@ -1,5 +1,6 @@
 package com.example.birdfarmprojectbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class FoodnormMedicine {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "foodNormID", nullable = false)
+    @JsonIgnore
     private FoodNorm foodNormID;
 
     @NotNull
