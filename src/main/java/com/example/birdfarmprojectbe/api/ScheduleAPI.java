@@ -100,9 +100,13 @@ public class ScheduleAPI {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
         TaskBird result = taskBirdRepository.save(taskBird);
-        taskBirdFoodRepository.deleteByTaskBirdID(taskBird.getId());
+        if(taskBird.getTaskBirdFoods().size() > 0){
+            taskBirdFoodRepository.deleteByTaskBirdID(taskBird.getId());
+        }
+        if(taskBird.getTaskBirdMedicines().size() > 0){
+            taskBirdMedicineRepository.deleteByTaskBirdID(taskBird.getId());
+        }
         taskBirdFoodRepository.saveAll(foodList);
-        taskBirdMedicineRepository.deleteByTaskBirdID(taskBird.getId());
         taskBirdMedicineRepository.saveAll(medicineList);
         return ResponseEntity
                 .ok()
@@ -112,8 +116,13 @@ public class ScheduleAPI {
     @PutMapping(value = "/deleteTaskBird/{id}")
     public ResponseEntity<Void> delete(@PathVariable final Integer id)
     {
-        taskBirdFoodRepository.deleteByTaskBirdID(id);
-        taskBirdMedicineRepository.deleteByTaskBirdID(id);
+        TaskBird taskBird = taskBirdRepository.findById(id).get();
+        if(taskBird.getTaskBirdFoods().size() > 0){
+            taskBirdFoodRepository.deleteByTaskBirdID(taskBird.getId());
+        }
+        if(taskBird.getTaskBirdMedicines().size() > 0){
+            taskBirdMedicineRepository.deleteByTaskBirdID(taskBird.getId());
+        }
         taskBirdRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

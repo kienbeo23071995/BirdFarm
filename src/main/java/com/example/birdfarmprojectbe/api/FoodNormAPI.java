@@ -94,17 +94,21 @@ public class FoodNormAPI {
         foodNorm.setNumberOfFeeding(foodNormDTO.getNumberOfFeeding());
         foodNormRepository.save(foodNorm);
         if(foodNormDTO.getFoodNormFoodDTOS() != null){
-            foodnormFoodRepository.deleteByFoodNormID(foodNorm.getId());
+            if(foodNorm.getFoodnormFoods().size() > 0){
+                foodnormFoodRepository.deleteByFoodNormID(foodNorm.getId());
+            }
             for(FoodNormFoodDTO item : foodNormDTO.getFoodNormFoodDTOS()){
                 FoodnormFood f = new FoodnormFood();
                 f.setQuantity(item.getQuantity());
                 f.setFoodNormID(foodNorm);
-                f.setFoodTypeID(f.getFoodTypeID());
+                f.setFoodTypeID(item.getFoodType());
                 foodnormFoodRepository.save(f);
             }
         }
         if(foodNormDTO.getFoodNormMedicineDTOS() != null){
-            foodnormMedicineRepository.deleteByFoodNormID(foodNorm.getId());
+            if(foodNorm.getFoodnormMedicines().size() > 0){
+                foodnormMedicineRepository.deleteByFoodNormID(foodNorm.getId());
+            }
             for(FoodNormMedicineDTO item : foodNormDTO.getFoodNormMedicineDTOS()){
                 FoodnormMedicine i = new FoodnormMedicine();
                 i.setQuantity(item.getQuantity());
@@ -118,6 +122,13 @@ public class FoodNormAPI {
 
     @PostMapping("/delete/{id}")
     public ResponseEntity<FoodNorm> delete(@PathVariable final Integer id){
+        FoodNorm foodNorm = foodNormRepository.findById(id).get();
+        if(foodNorm.getFoodnormFoods().size() > 0){
+            foodnormFoodRepository.deleteByFoodNormID(foodNorm.getId());
+        }
+        if(foodNorm.getFoodnormMedicines().size() > 0){
+            foodnormMedicineRepository.deleteByFoodNormID(foodNorm.getId());
+        }
         foodnormFoodRepository.deleteByFoodNormID(id);
         foodnormMedicineRepository.deleteByFoodNormID(id);
         foodNormRepository.deleteById(id);
