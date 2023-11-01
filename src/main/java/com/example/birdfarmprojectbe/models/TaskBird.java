@@ -60,7 +60,7 @@ public class TaskBird {
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "foodNormID")
     private FoodNorm foodNormID;
 

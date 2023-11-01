@@ -49,9 +49,9 @@ public class FoodNorm {
     private Set<FoodnormFood> foodnormFoods = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "foodNormID")
-
     private Set<FoodnormMedicine> foodnormMedicines = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "foodNormID")
+    @JsonIgnore
     private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 }
