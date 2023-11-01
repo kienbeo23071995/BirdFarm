@@ -48,7 +48,7 @@ public class BirdAPI {
             Bird bird = new Bird();
             bird.setName(birdCageDTO.getName());
             bird.setAge(birdCageDTO.getAge());
-            bird.setBirdTypeID(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
+            bird.setBirdTypeid(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
             bird.setImage(fileUpload.uploadFile(file));
             bird.setGender(birdCageDTO.getGender());
             bird.setAttituteds(birdCageDTO.getAttituteds());
@@ -60,16 +60,16 @@ public class BirdAPI {
             birdRepository.save(bird);
             Status status = statusRepository.findById(birdCageDTO.getStatusID()).get();
             BirdStatus birdStatus = new BirdStatus();
-            birdStatus.setBirdID(bird);
-            birdStatus.setStatusID(status);
+            birdStatus.setBirdid(bird);
+            birdStatus.setStatusid(status);
             birdStatus.setStartDate(LocalDate.now());
             birdStatusRepository.save(birdStatus);
             BirdCage birdCage = new BirdCage();
             Cage cage = cageRepository.findById(birdCageDTO.getCageID()).get();
             cage.setQuantity(cage.getQuantity() + 1);
             cageRepository.save(cage);
-            birdCage.setCageID(cage);
-            birdCage.setBirdID(bird);
+            birdCage.setCageid(cage);
+            birdCage.setBirdid(bird);
             birdCage.setStartDate(LocalDate.now());
             birdCageRepository.save(birdCage);
             return ResponseEntity.ok(bird);
@@ -90,7 +90,7 @@ public class BirdAPI {
             Bird bird = birdRepository.findById(id).get();
             bird.setName(birdCageDTO.getName());
             bird.setAge(birdCageDTO.getAge());
-            bird.setBirdTypeID(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
+            bird.setBirdTypeid(birdTypeRepository.findById(birdCageDTO.getBirdTypeID()).get());
             bird.setImage(fileUpload.uploadFile(file));
             bird.setGender(birdCageDTO.getGender());
             bird.setAttituteds(birdCageDTO.getAttituteds());
@@ -103,8 +103,8 @@ public class BirdAPI {
             if(birdCageDTO.getStatusID() != null){
                 Status status = statusRepository.findById(birdCageDTO.getStatusID()).get();
                 BirdStatus birdStatus = new BirdStatus();
-                birdStatus.setBirdID(bird);
-                birdStatus.setStatusID(status);
+                birdStatus.setBirdid(bird);
+                birdStatus.setStatusid(status);
                 birdStatus.setStartDate(LocalDate.now());
                 BirdStatus oldBirdStatus = birdStatusRepository.getCurrentBirdStatusByBirdIDAndStatusID(bird.getId(), birdCageDTO.getStatusID());
                 oldBirdStatus.setEndDate(LocalDate.now());
@@ -119,8 +119,8 @@ public class BirdAPI {
                 cageRepository.save(currentCage);
                 cage.setQuantity(cage.getQuantity() + 1);
                 cageRepository.save(cage);
-                birdCage.setCageID(cage);
-                birdCage.setBirdID(bird);
+                birdCage.setCageid(cage);
+                birdCage.setBirdid(bird);
                 birdCage.setStartDate(LocalDate.now());
                 birdCageRepository.save(birdCage);
                 BirdCage oldBirdCage = birdCageRepository.getBirdCageByBirdIDAndCageID(cage.getId(), bird.getId());

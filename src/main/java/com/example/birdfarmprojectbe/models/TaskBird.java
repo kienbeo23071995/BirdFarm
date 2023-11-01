@@ -1,30 +1,25 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "Task_Bird")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@Table(name = "task_bird")
 public class TaskBird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,47 +28,48 @@ public class TaskBird {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "task_ID", nullable = false)
-    private Task task;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "birdID", nullable = false)
-    private Bird birdID;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "foodTypeID", nullable = false)
-    private FoodType foodTypeID;
-
-    @NotNull
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
-
-    @NotNull
-    @Column(name = "\"startDate\"", nullable = false)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime startDate;
-
-    @NotNull
-    @Column(name = "\"endDate\"", nullable = false)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime endDate;
+    @JoinColumn(name = "cageid", nullable = false)
+    private Cage cageid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "staffID")
-    private Account staff;
+    @JoinColumn(name = "staffid")
+    private Account staffid;
 
     @NotNull
     @Column(name = "status", nullable = false)
     private Integer status;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "task_id", nullable = false)
+    private Task task;
 
+    @NotNull
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
+
+    @NotNull
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+
+    @Size(max = 255)
     @Column(name = "note")
     private String note;
 
-    @Transient
-    private Integer LocationID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "foodNormID")
+    private FoodNorm foodNormID;
+
+    @OneToMany(mappedBy = "taskBirdID")
+    @JsonIgnore
+    private Set<TaskBirdFood> taskBirdFoods = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "taskBird")
+    @JsonIgnore
+    private Set<TaskBirdMedicine> taskBirdMedicines = new LinkedHashSet<>();
+
 }

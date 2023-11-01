@@ -3,6 +3,7 @@ package com.example.birdfarmprojectbe.dto;
 import java.util.List;
 
 public class TaskDTO {
+    private Integer accountID;
 
     private String color;
 
@@ -10,16 +11,25 @@ public class TaskDTO {
 
     private String description;
 
-    private List<BirdDTO> birdDTOList;
+    private List<CageTaskDTO> cageTaskDTOList;
 
     public TaskDTO() {
     }
 
-    public TaskDTO(String color, String title, String description, List<BirdDTO> birdDTOList) {
+    public TaskDTO(Integer accountID, String color, String title, String description, List<CageTaskDTO> cageTaskDTOList) {
+        this.accountID = accountID;
         this.color = color;
         this.title = title;
         this.description = description;
-        this.birdDTOList = birdDTOList;
+        this.cageTaskDTOList = cageTaskDTOList;
+    }
+
+    public Integer getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(Integer accountID) {
+        this.accountID = accountID;
     }
 
     public String getColor() {
@@ -46,11 +56,11 @@ public class TaskDTO {
         this.description = description;
     }
 
-    public List<BirdDTO> getBirdDTOList() {
-        return birdDTOList;
+    public List<CageTaskDTO> getBirdDTOList() {
+        return cageTaskDTOList;
     }
 
-    public void setBirdDTOList(List<BirdDTO> birdDTOList) {
-        this.birdDTOList = birdDTOList;
+    public void setBirdDTOList(List<CageTaskDTO> birdDTOList) {
+        this.cageTaskDTOList = birdDTOList;
     }
 }

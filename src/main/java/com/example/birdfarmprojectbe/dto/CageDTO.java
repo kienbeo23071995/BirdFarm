@@ -1,7 +1,5 @@
 package com.example.birdfarmprojectbe.dto;
 
-import com.example.birdfarmprojectbe.models.Location;
-
 public class CageDTO {
     private String type;
 
@@ -11,14 +9,17 @@ public class CageDTO {
 
     private Integer locationID;
 
+    private Integer birdTypeID;
+
     public CageDTO() {
     }
 
-    public CageDTO(String type, Integer max, Integer quantity, Integer locationID) {
+    public CageDTO(String type, Integer max, Integer quantity, Integer locationID, Integer birdTypeID) {
         this.type = type;
         this.max = max;
         this.quantity = quantity;
         this.locationID = locationID;
+        this.birdTypeID = birdTypeID;
     }
 
     public String getType() {
@@ -51,5 +52,13 @@ public class CageDTO {
 
     public void setLocationID(Integer locationID) {
         this.locationID = locationID;
+    }
+
+    public Integer getBirdTypeID() {
+        return birdTypeID;
+    }
+
+    public void setBirdTypeID(Integer birdTypeID) {
+        this.birdTypeID = birdTypeID;
     }
 }

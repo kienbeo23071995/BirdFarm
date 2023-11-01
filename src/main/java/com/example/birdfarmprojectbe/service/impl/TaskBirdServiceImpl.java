@@ -28,10 +28,6 @@ public class TaskBirdServiceImpl implements TaskBirdService {
             list = list.stream().filter(taskBird -> taskBird.getEndDate().isAfter(Helper.convertStringToLocalDateTime(endDate)))
                     .collect(Collectors.toList());
         }
-        for(TaskBird i : list){
-            Integer id = birdCageRepository.getBirdCageByBirdIDAndCageID(i.getBirdID().getId()).getCageID().getLocation().getId();
-            i.setLocationID(id);
-        }
         return list;
     }
 }

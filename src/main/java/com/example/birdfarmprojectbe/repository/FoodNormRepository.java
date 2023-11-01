@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FoodNormRepository extends JpaRepository<FoodNorm, Integer> {
-    @Query("Select FoodNorm from FoodNorm where birdType.id = :birdTypeID")
+    @Query("Select FoodNorm from FoodNorm where birdTypeid.id = :birdTypeID")
     public List<FoodNorm> getFoodNormByBirdTypeID(Integer birdTypeID);
 }

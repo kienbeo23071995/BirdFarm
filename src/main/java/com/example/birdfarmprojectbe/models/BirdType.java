@@ -1,26 +1,28 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import jakarta.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "bird_type")
 public class BirdType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specieid")
+    private Species specieid;
 
     @NotNull
     @Nationalized
@@ -28,15 +30,16 @@ public class BirdType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specieID")
-    private Species specieID;
-
-    @OneToMany(mappedBy = "birdTypeID")
+    @OneToMany(mappedBy = "birdTypeid")
     @JsonIgnore
     private Set<Bird> birds = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "birdType")
+    @OneToMany(mappedBy = "birdTypeid")
+    @JsonIgnore
+    private Set<Cage> cages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "birdTypeid")
     @JsonIgnore
     private Set<FoodNorm> foodNorms = new LinkedHashSet<>();
+
 }

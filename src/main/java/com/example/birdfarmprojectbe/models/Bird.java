@@ -1,24 +1,21 @@
 package com.example.birdfarmprojectbe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.Nationalized;
 
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+@Data
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "bird")
 public class Bird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,63 +23,21 @@ public class Bird {
     private Integer id;
 
     @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @NotNull
     @Column(name = "age", nullable = false)
     private LocalDate age;
 
     @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "image", nullable = false)
-    private String image;
-
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "birdTypeID", nullable = false)
-    private BirdType birdTypeID;
-
-    @OneToMany(mappedBy = "birdID")
-    @JsonIgnore
-    private Set<BirdCage> birdCages = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "birdID")
-    @JsonIgnore
-    private Set<BirdStatus> birdStatuses = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "birdID")
-    @JsonIgnore
-    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
+    @JoinColumn(name = "bird_typeid", nullable = false)
+    private BirdType birdTypeid;
 
     @NotNull
-    @Nationalized
-    @Lob
+    @Column(name = "exotic", nullable = false)
+    private Boolean exotic = false;
+
+    @NotNull
     @Column(name = "gender", nullable = false)
-    private Boolean gender;
-
-    @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "attituteds", nullable = false)
-    private String attituteds;
-
-    @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "qualities", nullable = false)
-    private String qualities;
-
-    @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "color", nullable = false)
-    private String color;
+    private Boolean gender = false;
 
     @NotNull
     @Nationalized
@@ -93,14 +48,44 @@ public class Bird {
     @NotNull
     @Nationalized
     @Lob
-    @Column(name = "exotic", nullable = false)
-    private Boolean exotic;
+    @Column(name = "attituteds", nullable = false)
+    private String attituteds;
 
     @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "color", nullable = false)
+    private String color;
+
     @Nationalized
     @Lob
     @Column(name = "exoticrate")
     private String exoticrate;
 
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "image", nullable = false)
+    private String image;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "qualities", nullable = false)
+    private String qualities;
+
+    @OneToMany(mappedBy = "birdid")
+    @JsonIgnore
+    private Set<BirdCage> birdCages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "birdid")
+    @JsonIgnore
+    private Set<BirdStatus> birdStatuses = new LinkedHashSet<>();
 
 }

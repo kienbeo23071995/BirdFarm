@@ -1,22 +1,20 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.time.LocalTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "food_norm")
 public class FoodNorm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,41 +23,37 @@ public class FoodNorm {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "birdTypeID", nullable = false)
-    private BirdType birdType;
+    @JoinColumn(name = "bird_typeid", nullable = false)
+    private BirdType birdTypeid;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "foodTypeID", nullable = false)
-    private FoodType foodType;
-
-    @NotNull
-    @Column(name = "quantityFood", nullable = false)
-    private Integer quantityFood;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicineID")
-    private Medicine medicine;
-
-    @Null
-    @Column(name = "quantityMedicine")
-    private Integer quantityMedicine;
-
-    @NotNull
-    @Column(name = "numberOfFeeding", nullable = false)
-    private Integer numberOfFeeding;
-
-    @NotNull
-    @Column(name = "startTime",nullable = false)
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime startTime;
-
-    @NotNull
-    @Column(name = "duration",nullable = false)
+    @Column(name = "duration", nullable = false)
     private Integer duration;
 
     @NotNull
+    @Column(name = "number_of_feeding", nullable = false)
+    private Integer numberOfFeeding;
+
+    @NotNull
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
+
+    @Size(max = 255)
     @Column(name = "note")
     private String note;
+
+    @Column(name = "water")
+    private Integer water;
+
+    @OneToMany(mappedBy = "foodNormID")
+    @JsonIgnore
+    private Set<FoodnormFood> foodnormFoods = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "foodNormID")
+    @JsonIgnore
+    private Set<FoodnormMedicine> foodnormMedicines = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "foodNormID")
+    @JsonIgnore
+    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
 }

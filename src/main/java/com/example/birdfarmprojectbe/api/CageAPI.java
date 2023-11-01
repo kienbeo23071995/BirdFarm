@@ -2,13 +2,11 @@ package com.example.birdfarmprojectbe.api;
 
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
 import com.example.birdfarmprojectbe.dto.CageDTO;
-import com.example.birdfarmprojectbe.models.Bird;
 import com.example.birdfarmprojectbe.models.Cage;
-import com.example.birdfarmprojectbe.repository.BirdRepository;
+import com.example.birdfarmprojectbe.repository.BirdTypeRepository;
 import com.example.birdfarmprojectbe.repository.CageRepository;
 import com.example.birdfarmprojectbe.repository.LocationRepository;
 import com.example.birdfarmprojectbe.service.FileUpload;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,10 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 
 @CrossOrigin(value = "*", allowedHeaders = "*")
 @RestController
@@ -29,6 +25,8 @@ public class CageAPI {
     private final CageRepository cageRepository;
 
     private final LocationRepository locationRepository;
+
+    private final BirdTypeRepository birdTypeRepository;
 
     private final FileUpload fileUpload;
 
@@ -46,10 +44,11 @@ public class CageAPI {
             CageDTO cageDTO = objectMapper.readValue(cageJson, CageDTO.class);
             Cage cage = new Cage();
             cage.setMax(cageDTO.getMax());
-            cage.setLocation(locationRepository.findById(cageDTO.getLocationID()).get());
+            cage.setLocationid(locationRepository.findById(cageDTO.getLocationID()).get());
             cage.setType(cageDTO.getType());
             cage.setQuantity(cageDTO.getQuantity());
             cage.setImage(fileUpload.uploadFile(file));
+            cage.setBirdTypeid(birdTypeRepository.findById(cageDTO.getBirdTypeID()).get());
             cageRepository.save(cage);
             return ResponseEntity.ok(cage);
         } catch (Exception e) {
@@ -68,10 +67,11 @@ public class CageAPI {
             CageDTO cageDTO = objectMapper.readValue(cageJson, CageDTO.class);
             Cage cage = cageRepository.findById(id).get();
             cage.setMax(cageDTO.getMax());
-            cage.setLocation(locationRepository.findById(cageDTO.getLocationID()).get());
+            cage.setLocationid(locationRepository.findById(cageDTO.getLocationID()).get());
             cage.setType(cageDTO.getType());
             cage.setQuantity(cageDTO.getQuantity());
             cage.setImage(fileUpload.uploadFile(file));
+            cage.setBirdTypeid(birdTypeRepository.findById(cageDTO.getBirdTypeID()).get());
             cageRepository.save(cage);
             return ResponseEntity
                     .ok()

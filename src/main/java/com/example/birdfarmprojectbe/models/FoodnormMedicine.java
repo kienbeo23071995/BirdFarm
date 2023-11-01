@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "bird_cage")
-public class BirdCage {
+@Table(name = "foodnorm_medicine")
+public class FoodnormMedicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -19,19 +17,16 @@ public class BirdCage {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "birdid", nullable = false)
-    private Bird birdid;
+    @JoinColumn(name = "medicineID", nullable = false)
+    private Medicine medicineID;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cageid", nullable = false)
-    private Cage cageid;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @JoinColumn(name = "foodNormID", nullable = false)
+    private FoodNorm foodNormID;
 
     @NotNull
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
 }

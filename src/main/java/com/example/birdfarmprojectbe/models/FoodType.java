@@ -1,23 +1,28 @@
 package com.example.birdfarmprojectbe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import jakarta.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "food_type")
 public class FoodType {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
+
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
     @NotNull
     @Nationalized
@@ -25,15 +30,12 @@ public class FoodType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    @OneToMany(mappedBy = "foodTypeID")
+    @JsonIgnore
+    private Set<FoodnormFood> foodnormFoods = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "foodTypeID")
     @JsonIgnore
-    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
+    private Set<TaskBirdFood> taskBirdFoods = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "foodType")
-    @JsonIgnore
-    private Set<FoodNorm> foodNorms = new LinkedHashSet<>();
 }

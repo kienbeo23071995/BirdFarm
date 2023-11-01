@@ -2,7 +2,6 @@ package com.example.birdfarmprojectbe.api;
 
 import com.example.birdfarmprojectbe.api.error.BadRequestAlertException;
 import com.example.birdfarmprojectbe.models.BirdType;
-import com.example.birdfarmprojectbe.models.Species;
 import com.example.birdfarmprojectbe.repository.BirdTypeRepository;
 import com.example.birdfarmprojectbe.repository.SpeciesRepository;
 import lombok.AllArgsConstructor;

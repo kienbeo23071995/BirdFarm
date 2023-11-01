@@ -1,6 +1,5 @@
 package com.example.birdfarmprojectbe.repository;
 
-import com.example.birdfarmprojectbe.models.BirdCage;
 import com.example.birdfarmprojectbe.models.Cage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

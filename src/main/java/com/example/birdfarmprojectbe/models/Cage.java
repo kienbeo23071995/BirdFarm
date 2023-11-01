@@ -1,26 +1,19 @@
 package com.example.birdfarmprojectbe.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import jakarta.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "cage")
 public class Cage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +21,14 @@ public class Cage {
     private Integer id;
 
     @NotNull
-    @Nationalized
-    @Lob
-    @Column(name = "type", nullable = false)
-    private String type;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "bird_typeid", nullable = false)
+    private BirdType birdTypeid;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "locationid", nullable = false)
+    private Location locationid;
 
     @NotNull
     @Column(name = "\"max\"", nullable = false)
@@ -41,18 +38,24 @@ public class Cage {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @OneToMany(mappedBy = "cageID")
-    @JsonIgnore
-    private List<BirdCage> birdCages = new ArrayList<>();
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "locationID", nullable = false)
-    private Location location;
-
     @NotNull
     @Nationalized
     @Lob
     @Column(name = "image", nullable = false)
     private String image;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "type", nullable = false)
+    private String type;
+
+    @OneToMany(mappedBy = "cageid")
+    @JsonIgnore
+    private Set<BirdCage> birdCages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "cageid")
+    @JsonIgnore
+    private Set<TaskBird> taskBirds = new LinkedHashSet<>();
+
 }

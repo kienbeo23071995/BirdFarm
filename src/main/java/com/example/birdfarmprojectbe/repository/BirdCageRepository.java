@@ -10,7 +10,7 @@ public interface BirdCageRepository extends JpaRepository<BirdCage, Integer> {
     @Query(value = "Select Cage.[max] - Cage.quantity as num from Cage where id = ?1",nativeQuery = true)
     Integer getNumOfRemainsCage(Integer cageID);
 
-    @Query(value = "Select bc from BirdCage bc where bc.cageID.id = :cageID")
+    @Query(value = "Select bc from BirdCage bc where bc.cageid.id = :cageID")
     Set<BirdCage> getBirdCageByCageID(Integer cageID);
 
     @Query(value = "Select * from bird_cage where birdid = ?1 and cageid = ?2 and end_date is null",nativeQuery = true)
